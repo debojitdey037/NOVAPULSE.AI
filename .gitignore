@@ -1,0 +1,23 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.venv/
+
+# Environment & Secrets
+.env
+*.local
+
+# System & Editor
+.DS_Store
+.idea/
+.vscode/
+*.swp
+
+# Temporary Uploads
+static/uploads/*
+!static/uploads/.gitkeep

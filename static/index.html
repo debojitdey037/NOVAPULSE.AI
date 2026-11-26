@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NOVAPULSE X1 — Animated RAG Website</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎧</text></svg>">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+    <a href="#" class="nav-brand">
+      <div class="brand-dot"></div>
+      <span>NOVAPULSE<span style="color:var(--accent-cyan);">.AI</span></span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#scrolly-section" class="active">Exploded View</a></li>
+      <li><a href="#rag-section">RAG Assistant</a></li>
+      <li><a href="#radar-section">Vector Radar</a></li>
+      <li><a href="#ingestion-section">Knowledge Base</a></li>
+    </ul>
+    <div style="display:flex; align-items:center; gap:1rem;">
+      <canvas id="audio-wave-canvas" style="display:block;"></canvas>
+      <div class="nav-telemetry" id="stat-chunks">22 Chunks</div>
+      <button class="btn btn-outline" id="btn-api-key" style="padding:0.35rem 0.75rem; font-size:0.75rem;">🔑 API Key</button>
+    </div>
+  </nav>
+
+  <!-- Hero Header -->
+  <section class="hero-section">
+    <div class="hero-pill">
+      <span>✨ 240-Frame Exploded Scrollytelling & 2D Vector Space RAG</span>
+    </div>
+    <h1 class="hero-title">NovaPulse X1 Flagship</h1>
+    <p class="hero-subtitle">
+      Experience the next generation of neural audiophile acoustic engineering. Explore the 240-frame exploded view and interact with our Python-powered Retrieval-Augmented Generation (RAG) assistant with direct hardware grounding.
+    </p>
+    <div class="hero-actions">
+      <a href="#scrolly-section" class="btn btn-primary">🎧 Explore Hardware Teardown</a>
+      <a href="#rag-section" class="btn btn-outline">🤖 Query Acoustic RAG</a>
+    </div>
+    <div style="width:100%; max-width:300px; height:3px; background:#182234; border-radius:3px; margin-top:2.5rem; overflow:hidden;">
+      <div id="load-progress" style="width:0%; height:100%; background:var(--accent-cyan); transition:width 0.2s;"></div>
+    </div>
+  </section>
+
+  <!-- Scrollytelling Exploded Hardware Section -->
+  <section class="scrolly-container" id="scrolly-section">
+    <div class="canvas-sticky-wrapper">
+      <canvas id="canvas-viewport"></canvas>
+
+      <!-- Scrubber Overlay Controls -->
+      <div class="scrubber-overlay">
+        <div class="scrubber-row">
+          <button class="btn btn-outline" id="btn-play" style="padding:0.35rem 0.8rem; font-size:0.75rem;">▶ Play</button>
+          <button class="btn btn-outline" id="btn-reverse" style="padding:0.35rem 0.8rem; font-size:0.75rem;">⏩ Forward</button>
+          <input type="range" id="frame-slider" class="scrubber-slider" min="1" max="240" value="1">
+          <span class="nav-telemetry" id="frame-indicator">FRAME: 001 / 240</span>
+        </div>
+        <div class="scrubber-pills" id="hotspot-pills-container">
+          <!-- Populated dynamically via /api/hotspots -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Scrollytelling Narrative Cards -->
+    <div class="scrolly-narrative">
+      <!-- Step 1 -->
+      <div class="scrolly-step">
+        <div class="step-card">
+          <span class="step-badge">STAGE I • FRAMES 001 - 045</span>
+          <h3 class="step-title">Aerospace Acoustic Enclosure</h3>
+          <p class="step-desc">
+            5-axis CNC-machined from 7075-T6 aluminum alloy. Micro-perforated acoustic pressure vents cancel internal back-wave resonances while preserving structural rigidity.
+          </p>
+          <span class="step-action" onclick="window.scrubToFrame(35)">🎯 Focus Chassis Frame #035 &rarr;</span>
+        </div>
+      </div>
+
+      <!-- Step 2 -->
+      <div class="scrolly-step">
+        <div class="step-card">
+          <span class="step-badge">STAGE II • FRAMES 046 - 090</span>
+          <h3 class="step-title">Magnetic Ergonomic Isolation</h3>
+          <p class="step-desc">
+            8-point neodymium magnetic retention array allows instant cushion detachment. Slow-recovery memory foam wrapped in breathable Japanese protein leather ensures passive isolation.
+          </p>
+          <span class="step-action" onclick="window.scrubToFrame(75)">🎯 Focus Cushion Frame #075 &rarr;</span>
+        </div>
+      </div>
+
+      <!-- Step 3 -->
+      <div class="scrolly-step">
+        <div class="step-card">
+          <span class="step-badge">STAGE III • FRAMES 091 - 135</span>
+          <h3 class="step-title">50mm Pure Beryllium Transducer</h3>
+          <p class="step-desc">
+            Ultra-thin 18-micron PEEK substrate deposited with 2.4-micron pure crystalline Beryllium. Driven by a 1.55 Tesla N52 magnetic motor for ultra-low 0.02% THD.
+          </p>
+          <span class="step-action" onclick="window.scrubToFrame(115)">🎯 Focus Transducer Frame #115 &rarr;</span>
+        </div>
+      </div>
+
+      <!-- Step 4 -->
+      <div class="scrolly-step">
+        <div class="step-card">
+          <span class="step-badge">STAGE IV • FRAMES 136 - 180</span>
+          <h3 class="step-title">NovaFlow Neural ANC Motherboard</h3>
+          <p class="step-desc">
+            Dedicated 1.2 TOPS Neural NPU running real-time adaptive Kalman noise filtering across 6 MEMS microphones for up to -48dB active noise attenuation.
+          </p>
+          <span class="step-action" onclick="window.scrubToFrame(125)">🎯 Focus ANC Logic Frame #125 &rarr;</span>
+        </div>
+      </div>
+
+      <!-- Step 5 -->
+      <div class="scrolly-step">
+        <div class="step-card">
+          <span class="step-badge">STAGE V • FRAMES 181 - 240</span>
+          <h3 class="step-title">Bifurcated Li-Po & Right-to-Repair</h3>
+          <p class="step-desc">
+            Twin 600mAh cells distributed across left and right chambers for perfect 50/50 balance. Tool-less pull-latch mechanism achieves 10/10 repairability.
+          </p>
+          <span class="step-action" onclick="window.scrubToFrame(142)">🎯 Focus Battery Frame #142 &rarr;</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Interactive RAG & Vector Space Section -->
+  <section class="section-wrapper" id="rag-section">
+    <div class="section-header">
+      <div class="section-tag">GROUNDED INTELLIGENCE</div>
+      <h2 class="section-title">Acoustic Engineering RAG Assistant</h2>
+      <p class="section-subtitle">
+        Ask technical questions about the NovaPulse X1. Responses are synthesized from the indexed vector knowledge base, with instant visual synchronization to the matching exploded component.
+      </p>
+    </div>
+
+    <div class="rag-layout">
+      <!-- Chat Interface -->
+      <div class="chat-panel">
+        <div class="chat-header">
+          <div class="chat-header-title">
+            <span style="color:var(--accent-cyan);">●</span>
+            <span>NovaPulse Engineering AI</span>
+          </div>
+          <span class="chat-mode-badge" id="chat-mode-badge">MODE: LOCAL GROUNDED</span>
+        </div>
+
+        <div class="chat-messages" id="chat-messages">
+          <div class="msg assistant">
+            <div class="msg-bubble">
+              Welcome to the <strong>NovaPulse X1 RAG Intelligence Console</strong>.
+              <br><br>
+              I have indexed all engineering specifications, teardown sequences, transducer dynamics, and ANC architecture. When you ask a question, the vector engine retrieves matching chunks and <strong>automatically syncs the 3D exploded view</strong> to the exact physical component!
+            </div>
+            <div class="msg-meta">SYSTEM READY • 240 FRAMES CACHED</div>
+          </div>
+        </div>
+
+        <div class="chat-suggestions">
+          <button class="suggestion-pill" data-query="What material is used for the acoustic driver diaphragm?">🔬 Driver Diaphragm</button>
+          <button class="suggestion-pill" data-query="How does the NovaFlow Neural ANC filter wind noise?">🌪️ Wind ANC Filter</button>
+          <button class="suggestion-pill" data-query="How long does the battery last with LDAC and ANC on?">🔋 Battery Endurance</button>
+          <button class="suggestion-pill" data-query="How do I disassemble the headphones for battery replacement?">🛠️ Teardown Guide</button>
+        </div>
+
+        <form class="chat-input-bar" id="chat-form">
+          <input type="text" id="chat-input" class="chat-input" placeholder="Ask about acoustic specs, ANC, battery, or disassembly..." autocomplete="off">
+          <button type="submit" class="chat-send-btn" id="chat-submit" title="Submit query">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="22" y1="2" x2="11" y2="13"></line>
+              <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+            </svg>
+          </button>
+        </form>
+      </div>
+
+      <!-- Visualizer & Telemetry -->
+      <div class="visualizer-panel" id="radar-section">
+        <!-- 2D Vector Space Radar -->
+        <div class="radar-card">
+          <div class="radar-header">
+            <div class="radar-title">
+              <span>🛰️</span>
+              <span>2D Semantic Vector Space Radar</span>
+            </div>
+            <div style="font-size:0.75rem; color:var(--text-dim); font-family:var(--font-mono);">COSINE DISTANCE PROJECTION</div>
+          </div>
+          <div class="radar-canvas-container">
+            <canvas id="radar-canvas"></canvas>
+          </div>
+        </div>
+
+        <!-- RAG Step Pipeline -->
+        <div class="pipeline-card">
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <strong style="font-size:0.92rem;">RAG Execution Pipeline</strong>
+            <span style="font-family:var(--font-mono); font-size:0.75rem; color:var(--accent-green);">REAL-TIME</span>
+          </div>
+          <div class="pipeline-steps">
+            <div class="p-step" id="p-step-1">
+              <span class="p-step-num">STEP 01</span>
+              <span class="p-step-name">Query Tokenizer</span>
+              <span class="p-step-status">Standby</span>
+            </div>
+            <div class="p-step" id="p-step-2">
+              <span class="p-step-num">STEP 02</span>
+              <span class="p-step-name">TF-IDF Vector</span>
+              <span class="p-step-status">Standby</span>
+            </div>
+            <div class="p-step" id="p-step-3">
+              <span class="p-step-num">STEP 03</span>
+              <span class="p-step-name">Cosine Ranking</span>
+              <span class="p-step-status">Standby</span>
+            </div>
+            <div class="p-step" id="p-step-4">
+              <span class="p-step-num">STEP 04</span>
+              <span class="p-step-name">Hardware Sync</span>
+              <span class="p-step-status">Standby</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Knowledge Base Ingestion & Chunk Browser -->
+  <section class="section-wrapper" id="ingestion-section">
+    <div class="section-header">
+      <div class="section-tag">VECTOR STORE & INGESTION</div>
+      <h2 class="section-title">Custom Document Ingestion & Chunk Browser</h2>
+      <p class="section-subtitle">
+        Upload your own technical documents (Markdown, TXT, PDF). They will be automatically parsed, chunked, projected into 2D vector coordinates, and made searchable by the RAG assistant.
+      </p>
+    </div>
+
+    <div class="ingestion-grid">
+      <!-- Upload Dropzone -->
+      <div>
+        <div class="dropzone-card" id="file-dropzone">
+          <div class="dropzone-icon">📥</div>
+          <div>
+            <strong style="color:#fff; font-size:1.05rem;">Drag & Drop Technical Docs</strong>
+            <p style="color:var(--text-muted); font-size:0.82rem; margin-top:0.35rem;">Supports .md, .txt, .pdf</p>
+          </div>
+          <button class="btn btn-outline" style="font-size:0.8rem; padding:0.4rem 1rem;">Browse Files</button>
+          <input type="file" id="file-input" style="display:none;" accept=".txt,.md,.pdf">
+        </div>
+
+        <div style="margin-top:1.5rem; text-align:center;">
+          <button class="btn btn-outline" id="btn-reset-corpus" style="font-size:0.78rem; border-color:rgba(255,100,100,0.3); color:#ff8888;">
+            🔄 Reset to Factory Corpus
+          </button>
+        </div>
+      </div>
+
+      <!-- Chunks Table -->
+      <div class="chunks-table-card">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <strong style="font-size:0.95rem;">Indexed Document Chunks</strong>
+          <span style="font-family:var(--font-mono); font-size:0.75rem; color:var(--accent-cyan);">DYNAMIC 2D COORDINATES</span>
+        </div>
+        <div class="chunks-table-wrapper">
+          <table class="chunks-table">
+            <thead>
+              <tr>
+                <th>Chunk ID</th>
+                <th>Title / Section</th>
+                <th>Tokens</th>
+                <th>Visual Target</th>
+                <th>2D Vector [X, Y]</th>
+              </tr>
+            </thead>
+            <tbody id="chunks-tbody">
+              <!-- Populated dynamically via /api/chunks -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- API Key Modal -->
+  <div class="modal-backdrop" id="key-modal">
+    <div class="modal-box">
+      <h3 style="font-size:1.25rem; font-weight:700; margin-bottom:0.75rem;">🔑 Configure Gemini API Key</h3>
+      <p style="color:var(--text-muted); font-size:0.88rem; margin-bottom:1.5rem;">
+        NovaPulse comes with a built-in high-accuracy local RAG synthesizer. If you would like to use <strong>Google Gemini 1.5 Flash</strong> for generative answers, enter your API key below:
+      </p>
+      <input type="password" id="input-api-key" class="chat-input" placeholder="AIzaSy..." style="width:100%; margin-bottom:1.5rem;">
+      <div style="display:flex; justify-content:flex-end; gap:0.75rem;">
+        <button class="btn btn-outline" id="btn-close-key">Cancel</button>
+        <button class="btn btn-primary" id="btn-save-key">Save Key</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div style="margin-bottom:0.75rem;">
+      <strong>NOVAPULSE X1</strong> • Next-Generation Audiophile Neural Acoustic Engineering
+    </div>
+    <div>
+      Powered by Python, FastAPI, Scikit-Learn Vector Space, & HTML5 60fps Scrollytelling Canvas
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="/static/js/scrolly.js"></script>
+  <script src="/static/js/visualizer.js"></script>
+  <script src="/static/js/app.js"></script>
+</body>
+</html>
